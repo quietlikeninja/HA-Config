@@ -17,16 +17,7 @@ scene: !include scenes.yaml
 
 frontend:
   themes: !include_dir_merge_named themes
-  
-aarlo:
-  username: !secret arlo_username
-  password: !secret arlo_password
-  refresh_devices_every: 2
-  stream_timeout: 120
-  
-camera:
-  - platform: aarlo
-    
+
 python_script:
 
 speedtestdotnet:
@@ -36,7 +27,37 @@ speedtestdotnet:
     - ping
     - download
     - upload
-
+    
 discovery:
 
 apple_tv:
+
+camera:
+  # Alert images from Blue Iris
+  - platform: mqtt
+    name: Camera1 Alert
+    unique_id: camera.camera1_alert
+    topic: BI/camera1/alert-image
+    
+influxdb:
+  host: !secret influxdb_server
+  port: !secret influxdb_port
+  database: !secret influxdb_db
+  username: !secret influxdb_username
+  password: !secret influxdb_password
+  max_retries: 3
+  default_measurement: state
+  
+recorder:
+  db_url: !secret recorder_db_url
+  
+sensor:
+  - platform: systemmonitor
+    resources:
+      - type: processor_use
+      - type: memory_free
+      - type: memory_use_percent
+      - type: disk_use_percent
+        arg: /
+      - type: disk_use
+      - type: disk_free

@@ -266,9 +266,8 @@
       target:
       - media_player.justin_s_echo_plus
     service: notify.alexa_media
-  - data:
-      message: The garage door has been open for 5 minutes
-    service: notify.mobile_app_bilberry_ii
+  - service: notify.mobile_app_bilberry_3
+    data: {}
   mode: single
 - id: '1598433091743'
   alias: Notify if Naomi Watts is not plugged in at night
